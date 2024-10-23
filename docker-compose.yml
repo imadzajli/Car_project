@@ -1,0 +1,26 @@
+version: '3'
+services:
+  backend:
+    image: location_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  front:
+    image: location_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - back
+    network_mode: "host"
+
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: fake
+      MYSQL_DATABASE: incidents
+      MYSQL_USER: incidents
+      MYSQL_PASSWORD: abcd@1234
+    ports:
+      - "3306:3306"
