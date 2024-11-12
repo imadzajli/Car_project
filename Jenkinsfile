@@ -15,7 +15,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('Sonarqube') {  // Name given to SonarQube server in Jenkins
-                    sh 'mvn clean verify sonar:sonar ' +
+                    bat 'mvn clean verify sonar:sonar ' +
                        '-Dsonar.projectKey=your_project_key ' +
                        '-Dsonar.host.url=$SONARQUBE_URL ' +
                        '-Dsonar.login=$SONARQUBE_CREDENTIALS'
