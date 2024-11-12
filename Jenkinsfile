@@ -2,37 +2,29 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'SonarQubeServer'  // Replace with your SonarQube server name in Jenkins
+        SONARQUBE_URL = 'http://localhost:9000'
+        SONARQUBE_CREDENTIALS = 'sonar'  // Replace with the credential ID for SonarQube token in Jenkins
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Pulls the latest code from your Git repository
-                git url: 'https://github.com/imadzajli/Car_project.git', branch: 'main'
+                checkout scm
             }
         }
-
-        stage('Build') {
-            steps {
-                // Builds the project using Maven on Windows
-                bat 'mvn clean install'
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQubeServer') {
-                    // Executes SonarQube analysis using Maven on Windows
-                    bat 'mvn sonar:sonar'
+                withSonarQubeEnv('Sonarqube') {  // Name given to SonarQube server in Jenkins
+                    sh 'mvn clean verify sonar:sonar ' +
+                       '-Dsonar.projectKey=your_project_key ' +
+                       '-Dsonar.host.url=$SONARQUBE_URL ' +
+                       '-Dsonar.login=$SONARQUBE_CREDENTIALS'
                 }
             }
         }
-
         stage('Quality Gate') {
             steps {
-                // Waits for SonarQube Quality Gate results
-                timeout(time: 1, unit: 'HOURS') {
+                timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
