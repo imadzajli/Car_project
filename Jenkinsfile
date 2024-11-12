@@ -9,22 +9,22 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Pulls the latest code from your Git repository
-                git url: 'https://github.com/imadzajli/S3_project.git', branch: 'main'
+                git url: 'https://github.com/imadzajli/Car_project.git', branch: 'main'
             }
         }
 
         stage('Build') {
             steps {
-                // Builds the project using Maven
-                sh 'mvn clean install'
+                // Builds the project using Maven on Windows
+                bat 'mvn clean install'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQubeServer') {
-                    // Executes SonarQube analysis using Maven
-                    sh 'mvn sonar:sonar'
+                    // Executes SonarQube analysis using Maven on Windows
+                    bat 'mvn sonar:sonar'
                 }
             }
         }
