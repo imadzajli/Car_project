@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_CREDENTIALS = 'sonar'  // Replace with the credential ID for SonarQube token in Jenkins
+        SONARQUBE_CREDENTIALS = 'sonar-qube'
     }
 
     stages {
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('Sonarqube') {  // Name given to SonarQube server in Jenkins
                     bat 'mvn clean verify sonar:sonar ' +
-                       '-Dsonar.projectKey=your_project_key ' +
+                       '-Dsonar.projectKey=sonar ' +
                        '-Dsonar.host.url=$SONARQUBE_URL ' +
                        '-Dsonar.login=$SONARQUBE_CREDENTIALS'
                 }
