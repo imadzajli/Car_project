@@ -12,6 +12,11 @@ pipeline {
                 checkout scm
             }
         }
+        stage('test') {
+            steps {
+                echo "hello to sonar !!!!!"
+            }
+        }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('Sonarqube') {  // Name given to SonarQube server in Jenkins
