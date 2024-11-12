@@ -23,6 +23,9 @@ public class Car {
     private int year;
     @NonNull
     private int price;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     public Car(long id, String mark, String model, String color, String immatricule, int year, int price) {

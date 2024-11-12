@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -15,5 +16,7 @@ public class User {
     @NonNull
     private String nom;
     @NonNull private String prenom;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Car> cars;
 
 }
